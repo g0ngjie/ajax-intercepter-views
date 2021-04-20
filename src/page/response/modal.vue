@@ -5,6 +5,7 @@
       :visible.sync="isShow"
       :before-close="handleClose"
       top="1%"
+      width="80%"
     >
       <el-form :model="form" ref="form">
         <el-form-item

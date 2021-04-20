@@ -41,13 +41,7 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          switchOn: true,
-          match: "/api/login",
-          override: `{ ok: true, message: '登录成功', data: {} }`,
-        },
-      ],
+      tableData: [],
     };
   },
   methods: {
