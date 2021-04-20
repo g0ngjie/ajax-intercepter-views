@@ -69,21 +69,18 @@ export default {
     };
   },
   methods: {
-    searchDataFunc(key, value) {
-      const newList = [];
-      this.tableData.forEach((item) => {
-        if (item[key].includes(value)) newList.push(item);
-      });
-      return newList;
-    },
     handleSearch() {
       const { match, remark } = this.searchForm;
       const newList = [];
       if (match) {
-        newList.push(...this.searchDataFunc("match", match));
+        this.tableData.forEach((item) => {
+          if (item.match && item.match.includes(match)) newList.push(item);
+        });
       }
       if (remark) {
-        newList.push(...this.searchDataFunc("remark", remark));
+        this.tableData.forEach((item) => {
+          if (item.remark && item.remark.includes(remark)) newList.push(item);
+        });
       }
       this.tableData = newList;
     },
