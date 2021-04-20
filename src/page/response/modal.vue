@@ -9,24 +9,22 @@
     >
       <el-form :model="form" ref="form">
         <el-form-item
-          label="请求路径:"
+          label="Match URL"
           :rules="[
             {
               required: true,
-              message: '不能为空',
               trigger: 'change',
             },
           ]"
           prop="match"
         >
-          <el-input v-model="form.match" placeholder="请输入"></el-input>
+          <el-input v-model="form.match" placeholder="Please input"></el-input>
         </el-form-item>
         <el-form-item
-          label="响应数据:"
+          label="ResponseText"
           :rules="[
             {
               required: true,
-              message: '不能为空',
               trigger: 'change',
             },
           ]"
@@ -37,17 +35,17 @@
             :rows="15"
             show-word-limit
             v-model="form.override"
-            placeholder="请输入"
+            placeholder="Please input"
           >
           </el-input>
         </el-form-item>
-        <el-form-item label="备注:">
+        <el-form-item label="Remark">
           <el-input
             type="textarea"
             :rows="3"
             show-word-limit
             v-model="form.remark"
-            placeholder="请输入"
+            placeholder="Please input"
           >
           </el-input>
         </el-form-item>
@@ -77,10 +75,10 @@ export default {
     open(row) {
       if (row) {
         this.isEdit = true;
-        this.title = "编辑";
+        this.title = "Edit";
       } else {
         this.isEdit = false;
-        this.title = "新增";
+        this.title = "Create";
       }
       this.isShow = true;
       this.form = row || { remark: "" };

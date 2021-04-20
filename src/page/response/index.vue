@@ -1,9 +1,9 @@
 <template>
   <div class="response-container">
-    <el-button type="primary" @click="handleCreate">新建</el-button>
+    <el-button type="primary" @click="handleCreate">Create</el-button>
     <section class="tips">
       <el-alert
-        title="接口响应拦截，注意风险把控"
+        title="所有responseText会常驻浏览器后台；注意风险把控，不用的话记得关闭哦~"
         type="error"
         :closable="false"
       />
@@ -27,8 +27,8 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleSearch">查询</el-button>
-          <el-button @click="handleReset">重置</el-button>
+          <el-button type="primary" @click="handleSearch">Search</el-button>
+          <el-button @click="handleReset">Reset</el-button>
         </el-form-item>
       </el-form>
     </section>
@@ -41,11 +41,11 @@
       <el-table-column prop="match" label="match" show-overflow-tooltip />
       <el-table-column prop="override" label="override" show-overflow-tooltip />
       <el-table-column prop="remark" label="remark" show-overflow-tooltip />
-      <el-table-column label="操作" align="center" width="150">
+      <el-table-column label="options" align="center" width="150">
         <template slot-scope="{ row }">
-          <el-button @click="handleEdit(row)" plain>编辑</el-button>
+          <el-button @click="handleEdit(row)" plain>Edit</el-button>
           <el-button type="danger" @click="handleDel(row)" plain
-            >删除</el-button
+            >Delete</el-button
           >
         </template>
       </el-table-column>
