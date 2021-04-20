@@ -71,6 +71,7 @@ export default {
   methods: {
     handleSearch() {
       const { match, remark } = this.searchForm;
+      if (!match && !remark) return;
       const newList = [];
       if (match) {
         this.tableData.forEach((item) => {
