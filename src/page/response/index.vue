@@ -9,6 +9,29 @@
       />
     </section>
     <Modal ref="modal" @putData="putData" @editData="editData" />
+    <!-- 搜索栏 -->
+    <section>
+      <el-form :inline="true" :model="searchForm">
+        <el-form-item label="match">
+          <el-input
+            v-model="searchForm.match"
+            clearable
+            placeholder="match"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="remark">
+          <el-input
+            v-model="searchForm.remark"
+            clearable
+            placeholder="remark"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleSearch">查询</el-button>
+          <el-button @click="handleReset">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </section>
     <el-table :data="tableData" stripe>
       <el-table-column label="switch" width="80">
         <template slot-scope="{ row }">
@@ -41,10 +64,33 @@ export default {
   },
   data() {
     return {
+      searchForm: {},
       tableData: [],
     };
   },
   methods: {
+    searchDataFunc(key, value) {
+      const newList = [];
+      this.tableData.forEach((item) => {
+        if (item[key].includes(value)) newList.push(item);
+      });
+      return newList;
+    },
+    handleSearch() {
+      const { match, remark } = this.searchForm;
+      const newList = [];
+      if (match) {
+        newList.push(...this.searchDataFunc("match", match));
+      }
+      if (remark) {
+        newList.push(...this.searchDataFunc("remark", remark));
+      }
+      this.tableData = newList;
+    },
+    handleReset() {
+      this.searchForm = {};
+      this.initList();
+    },
     handleCreate() {
       this.$refs.modal.open();
     },

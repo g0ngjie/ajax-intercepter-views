@@ -83,7 +83,7 @@ export default {
         this.title = "新增";
       }
       this.isShow = true;
-      this.form = row || {};
+      this.form = row || { remark: "" };
       this.$nextTick(() => this.$refs.form.clearValidate());
     },
     // 模态关闭
