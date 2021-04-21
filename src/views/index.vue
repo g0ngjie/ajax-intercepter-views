@@ -31,10 +31,12 @@
         </el-radio-group>
       </section>
     </div>
-    <Table v-if="switchOn" ref="table" />
-    <div v-else class="closed-container">
-      <i class="el-icon-close-notification"></i>
-    </div>
+    <transition name="fade" mode="out-in">
+      <Table v-if="switchOn" ref="table" />
+      <div v-else class="closed-container">
+        <i class="el-icon-close-notification"></i>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -131,6 +133,15 @@ export default {
 .app-container {
   width: 100%;
   height: 100%;
+  // 过渡动画
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.1s;
+  }
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0;
+  }
   .global-switch {
     display: flex;
     align-items: center;
