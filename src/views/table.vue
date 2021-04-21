@@ -3,6 +3,9 @@
     <el-button type="primary" @click="handleCreate">{{
       $t("create")
     }}</el-button>
+    <section class="tab-container">
+      
+    </section>
     <section class="tips">
       <el-alert :title="$t('errTips')" type="error" :closable="false" />
     </section>
