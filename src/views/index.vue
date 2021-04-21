@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <div class="global-switch">
       <section>
         <i class="el-icon-switch-button"></i>
@@ -32,6 +32,9 @@
       </section>
     </div>
     <Table v-if="switchOn" ref="table" />
+    <div v-else class="closed-container">
+      <i class="el-icon-close-notification"></i>
+    </div>
   </div>
 </template>
 <script>
@@ -125,20 +128,35 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.global-switch {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  padding: 0 15px;
-  section {
+.app-container {
+  width: 100%;
+  height: 100%;
+  .global-switch {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 0 15px;
+    section {
+      display: flex;
+      align-items: center;
+      i {
+        font-size: 20px;
+        font-weight: bold;
+        color: #e84749;
+        margin-right: 10px;
+      }
+    }
+  }
+  .closed-container {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     i {
-      font-size: 20px;
-      font-weight: bold;
-      color: #e84749;
-      margin-right: 10px;
+      font-size: 50px;
+      color: #666;
     }
   }
 }
