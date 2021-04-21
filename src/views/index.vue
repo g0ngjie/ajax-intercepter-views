@@ -37,12 +37,17 @@ export default {
     handleLangChange(name) {
       this.$i18n.locale = name;
       setLang(name);
+      this.syncDocTitle();
     },
     handleSwitch(bool) {
       // 同步
       noticeSwitchOn(bool);
       // 数据处理
       setGlobalSwitchOn(bool);
+    },
+    // 同步标题
+    syncDocTitle() {
+      document.title = this.$t("document.title");
     },
     async initData() {
       // 获取 开关状态
@@ -51,6 +56,7 @@ export default {
       const lang = await getLang();
       this.language = lang;
       this.$i18n.locale = lang;
+      this.syncDocTitle();
     },
   },
   created() {

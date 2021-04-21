@@ -1,5 +1,8 @@
 
 export default {
+    document: {
+        title: 'Interceptor'
+    },
     modal: {
         title: {
             create: 'Create',

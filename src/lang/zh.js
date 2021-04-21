@@ -1,5 +1,8 @@
 
 export default {
+    document: {
+        title: '拦截器'
+    },
     modal: {
         title: {
             create: '新增',
