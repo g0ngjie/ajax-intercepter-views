@@ -5,7 +5,8 @@ function getStore(key) {
     return new Promise(resole => {
         if (chrome.storage) {
             chrome.storage.local.get(key, (result) => {
-                resole({ ok: true, data: result })
+                if (result.hasOwnProperty(key)) resole({ ok: true, data: result[key] })
+                else resole({ ok: false })
             });
         } else resole({ ok: false })
     })
