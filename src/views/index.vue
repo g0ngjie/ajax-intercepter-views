@@ -1,8 +1,14 @@
 <template>
   <div>
     <div class="global-switch">
-      <i class="el-icon-switch-button"></i>
-      <el-switch v-model="switchOn" @change="handleSwitch" />
+      <section>
+        <i class="el-icon-switch-button"></i>
+        <el-switch v-model="switchOn" @change="handleSwitch" />
+      </section>
+      <el-radio-group v-model="language" @change="handleLangChange">
+        <el-radio-button label="en">En</el-radio-button>
+        <el-radio-button label="zh">汉</el-radio-button>
+      </el-radio-group>
     </div>
     <Table v-if="switchOn" />
   </div>
@@ -17,9 +23,14 @@ export default {
     return {
       switchOn: false,
       proxy_routes: [],
+      language: "en",
     };
   },
   methods: {
+    // 国际化
+    handleLangChange(name) {
+      this.$i18n.locale = name;
+    },
     handleSwitch(bool) {
       // 发送给background.js
       chrome.runtime.sendMessage(chrome.runtime.id, {
@@ -55,12 +66,18 @@ body,
 .global-switch {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 15px;
-  i {
-    font-size: 20px;
-    font-weight: bold;
-    color: #e84749;
-    margin-right: 10px;
+  padding: 0 15px;
+  section {
+    display: flex;
+    align-items: center;
+    i {
+      font-size: 20px;
+      font-weight: bold;
+      color: #e84749;
+      margin-right: 10px;
+    }
   }
 }
 </style>

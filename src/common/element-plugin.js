@@ -11,6 +11,8 @@ import {
     OptionGroup,
     Button,
     ButtonGroup,
+    RadioGroup,
+    RadioButton,
     Table,
     TableColumn,
     Tooltip,
@@ -37,6 +39,8 @@ Vue.use(Option);
 Vue.use(OptionGroup);
 Vue.use(Button);
 Vue.use(ButtonGroup);
+Vue.use(RadioGroup);
+Vue.use(RadioButton);
 Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Tooltip);
