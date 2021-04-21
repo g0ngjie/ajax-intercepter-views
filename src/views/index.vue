@@ -5,12 +5,33 @@
         <i class="el-icon-switch-button"></i>
         <el-switch v-model="switchOn" @change="handleSwitch" />
       </section>
-      <el-radio-group v-model="language" @change="handleLangChange">
-        <el-radio-button label="en">En</el-radio-button>
-        <el-radio-button label="zh">汉</el-radio-button>
-      </el-radio-group>
+      <section>
+        <section v-if="switchOn">
+          <el-button
+            style="margin-right: 10px"
+            type="info"
+            round
+            plain
+            @click="handleDownload"
+            >{{ $t("toolbar.download") }}</el-button
+          >
+          <el-upload
+            action
+            :auto-upload="false"
+            :on-change="handleUpload"
+            :show-file-list="false"
+            style="margin-right: 20px"
+          >
+            <el-button type="info" round>{{ $t("toolbar.upload") }}</el-button>
+          </el-upload>
+        </section>
+        <el-radio-group v-model="language" @change="handleLangChange">
+          <el-radio-button label="en">En</el-radio-button>
+          <el-radio-button label="zh">汉</el-radio-button>
+        </el-radio-group>
+      </section>
     </div>
-    <Table v-if="switchOn" />
+    <Table v-if="switchOn" ref="table" />
   </div>
 </template>
 <script>
@@ -20,8 +41,12 @@ import {
   setLang,
   setGlobalSwitchOn,
   getGlobalSwitchOn,
+  getRoutes,
+  setRoutes,
 } from "@/common/store";
 import { noticeSwitchOn } from "@/common/notice";
+import { confirmFunc, simpleDownload } from "@/common";
+import { typeIs } from "@alrale/common-lib";
 export default {
   components: {
     Table,
@@ -33,6 +58,41 @@ export default {
     };
   },
   methods: {
+    // 下载
+    async handleDownload() {
+      const jsonArr = await getRoutes();
+      if (typeIs(jsonArr) !== "array") return;
+      if (jsonArr.length === 0)
+        return this.$message.warning(this.$t("toolbar.no_down_data"));
+      simpleDownload(JSON.stringify(jsonArr, null, "\t"), "backup.json");
+    },
+    // 上传
+    handleUpload(file) {
+      let reader = new FileReader();
+      const { override_data, import_empty, read_err } = this.$t("toolbar");
+      reader.onload = async (e) => {
+        try {
+          let _json = JSON.parse(e.target.result);
+          const routes = await getRoutes();
+          if (!_json) return;
+          if (routes.length > 0) {
+            // 如果存在
+            const { ok } = await confirmFunc({
+              message: override_data,
+            });
+            if (ok) {
+              if (typeIs(_json) === "array" && _json.length > 0) {
+                setRoutes(_json);
+                this.$refs.table.initList();
+              } else this.$message.warning(import_empty);
+            }
+          }
+        } catch (err) {
+          this.$message.error(read_err);
+        }
+      };
+      reader.readAsText(file.raw);
+    },
     // 国际化
     handleLangChange(name) {
       this.$i18n.locale = name;

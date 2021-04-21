@@ -1,60 +1,69 @@
-
 export default {
-    document: {
-        title: 'Interceptor'
+  document: {
+    title: "Interceptor",
+  },
+  modal: {
+    title: {
+      create: "Create",
+      edit: "Edit",
     },
-    modal: {
-        title: {
-            create: 'Create',
-            edit: 'Edit'
-        },
-        form: {
-            match: {
-                name: 'Match URL',
-                msg: 'match is required'
-            },
-            res: {
-                name: 'ResponseText',
-                msg: 'response text is required'
-            },
-            remark: {
-                name: 'Remark'
-            },
-            placeholder: 'Please input'
-        },
-        btn: {
-            confirm: 'OK',
-            cancel: 'Cancel'
-        }
+    form: {
+      match: {
+        name: "Match URL",
+        msg: "match is required",
+      },
+      res: {
+        name: "ResponseText",
+        msg: "response text is required",
+      },
+      remark: {
+        name: "Remark",
+      },
+      placeholder: "Please input",
     },
-    errTips: "All responseText will be resident in the browser background; pay attention to risk control, and remember to close it if you don't use it~",
-    create: 'Create',
-    search: {
-        match: {
-            name: 'match',
-            placeholder: 'match'
-        },
-        remark: {
-            name: 'remark',
-            placeholder: 'remark'
-        },
-        btn: {
-            search: 'Search',
-            reset: 'Reset'
-        }
+    btn: {
+      confirm: "OK",
+      cancel: "Cancel",
     },
-    table: {
-        columns: {
-            switch: 'switch',
-            match: 'match',
-            res: 'responseText',
-            remark: 'remark',
-            options: 'options'
-        },
-        btn: {
-            del: 'Delete',
-            edit: 'Edit'
-        }
+  },
+  errTips:
+    "All responseText will be resident in the browser background; pay attention to risk control, and remember to close it if you don't use it~",
+  create: "Create",
+  search: {
+    match: {
+      name: "match",
+      placeholder: "match",
     },
-    confirMsg: 'Are you sure you want to delete?'
-}
+    remark: {
+      name: "remark",
+      placeholder: "remark",
+    },
+    btn: {
+      search: "Search",
+      reset: "Reset",
+    },
+  },
+  table: {
+    columns: {
+      switch: "switch",
+      match: "match",
+      res: "responseText",
+      remark: "remark",
+      options: "options",
+    },
+    btn: {
+      del: "Delete",
+      edit: "Edit",
+    },
+  },
+  confirMsg: "Are you sure you want to delete?",
+  toolbar: {
+    upload: "Upload",
+    download: "Download",
+    no_down_data: "There is no data to download",
+    override_data:
+      "If the upload is successful, the original file will be overwritten",
+    import_empty: "You imported an empty list",
+    read_err: "Read exception. The file may not be a JSON",
+  },
+};
