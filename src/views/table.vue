@@ -1,52 +1,73 @@
 <template>
   <div class="response-container">
-    <el-button type="primary" @click="handleCreate">Create</el-button>
+    <el-button type="primary" @click="handleCreate">{{
+      $t("create")
+    }}</el-button>
     <section class="tips">
-      <el-alert
-        title="所有responseText会常驻浏览器后台；注意风险把控，不用的话记得关闭哦~"
-        type="error"
-        :closable="false"
-      />
+      <el-alert :title="$t('errTips')" type="error" :closable="false" />
     </section>
     <Modal ref="modal" @putData="putData" @editData="editData" />
     <!-- 搜索栏 -->
     <section>
       <el-form :inline="true" :model="searchForm">
-        <el-form-item label="match">
+        <el-form-item :label="$t('search.match.name')">
           <el-input
             v-model="searchForm.match"
             clearable
-            placeholder="match"
+            :placeholder="$t('search.match.placeholder')"
           ></el-input>
         </el-form-item>
-        <el-form-item label="remark">
+        <el-form-item :label="$t('search.remark.name')">
           <el-input
             v-model="searchForm.remark"
             clearable
-            placeholder="remark"
+            :placeholder="$t('search.remark.placeholder')"
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleSearch">Search</el-button>
-          <el-button @click="handleReset">Reset</el-button>
+          <el-button type="primary" @click="handleSearch">{{
+            $t("search.btn.search")
+          }}</el-button>
+          <el-button @click="handleReset">{{
+            $t("search.btn.reset")
+          }}</el-button>
         </el-form-item>
       </el-form>
     </section>
+    <!-- 表格 -->
     <el-table :data="tableData" stripe>
-      <el-table-column label="switch" width="80">
+      <el-table-column :label="$t('table.columns.switch')" width="80">
         <template slot-scope="{ row }">
           <el-switch v-model="row.switchOn" @change="handleSwitch" />
         </template>
       </el-table-column>
-      <el-table-column prop="match" label="match" show-overflow-tooltip />
-      <el-table-column prop="override" label="override" show-overflow-tooltip />
-      <el-table-column prop="remark" label="remark" show-overflow-tooltip />
-      <el-table-column label="options" align="center" width="150">
+      <el-table-column
+        prop="match"
+        :label="$t('table.columns.match')"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="override"
+        :label="$t('table.columns.res')"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="remark"
+        :label="$t('table.columns.remark')"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        :label="$t('table.columns.options')"
+        align="center"
+        width="150"
+      >
         <template slot-scope="{ row }">
-          <el-button @click="handleEdit(row)" plain>Edit</el-button>
-          <el-button type="danger" @click="handleDel(row)" plain
-            >Delete</el-button
-          >
+          <el-button @click="handleEdit(row)" plain>{{
+            $t("table.btn.edit")
+          }}</el-button>
+          <el-button type="danger" @click="handleDel(row)" plain>{{
+            $t("table.btn.del")
+          }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -57,6 +78,8 @@
 import Modal from "./modal";
 import { confirmFunc } from "@/common/index";
 import { deepClone } from "@alrale/common-lib";
+import { getRoutes, setRoutes } from "@/common/store";
+import { noticeRoutes } from "@/common/notice";
 
 export default {
   components: {
@@ -100,7 +123,7 @@ export default {
       this.modifyNotice(this.tableData);
     },
     async handleDel({ id }) {
-      const { ok } = await confirmFunc({ message: "确认删除" });
+      const { ok } = await confirmFunc({ message: this.$t("confirMsg") });
       if (ok) {
         const newList = [];
         this.tableData.forEach((item) => {
@@ -125,19 +148,11 @@ export default {
     },
     // 通知
     modifyNotice(proxy_routes) {
-      chrome.storage && chrome.storage.local.set({ proxy_routes });
-      chrome.runtime.sendMessage(chrome.runtime.id, {
-        type: "__ajax_proxy",
-        to: "background",
-        key: "proxy_routes",
-        value: proxy_routes,
-      });
+      setRoutes(proxy_routes);
+      noticeRoutes(proxy_routes);
     },
-    initList() {
-      chrome.storage &&
-        chrome.storage.local.get("proxy_routes", (result) => {
-          if (result.proxy_routes) this.tableData = result.proxy_routes;
-        });
+    async initList() {
+      this.tableData = await getRoutes();
     },
   },
   created() {

@@ -9,23 +9,28 @@
     >
       <el-form :model="form" ref="form">
         <el-form-item
-          label="Match URL"
+          :label="$t('modal.form.match.name')"
           :rules="[
             {
               required: true,
               trigger: 'change',
+              message: $t('modal.form.match.msg'),
             },
           ]"
           prop="match"
         >
-          <el-input v-model="form.match" placeholder="Please input"></el-input>
+          <el-input
+            v-model="form.match"
+            :placeholder="$t('modal.form.placeholder')"
+          ></el-input>
         </el-form-item>
         <el-form-item
-          label="ResponseText"
+          :label="$t('modal.form.res.name')"
           :rules="[
             {
               required: true,
               trigger: 'change',
+              message: $t('modal.form.res.msg'),
             },
           ]"
           prop="override"
@@ -33,27 +38,23 @@
           <el-input
             type="textarea"
             :rows="15"
-            show-word-limit
             v-model="form.override"
-            placeholder="Please input"
+            :placeholder="$t('modal.form.placeholder')"
           >
           </el-input>
         </el-form-item>
-        <el-form-item label="Remark">
+        <el-form-item :label="$t('modal.form.remark.name')">
           <el-input
-            type="textarea"
-            :rows="3"
-            show-word-limit
             v-model="form.remark"
-            placeholder="Please input"
+            :placeholder="$t('modal.form.placeholder')"
           >
           </el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">{{ $t("modal.confirm") }}</el-button>
+        <el-button @click="handleClose">{{ $t("modal.btn.cancel") }}</el-button>
         <el-button type="primary" @click="handleSubmit">{{
-          $t("modal.cancel")
+          $t("modal.btn.confirm")
         }}</el-button>
       </span>
     </el-dialog>
@@ -77,10 +78,12 @@ export default {
     open(row) {
       if (row) {
         this.isEdit = true;
-        this.title = "Edit";
+        // 编辑
+        this.title = this.$t("modal.title.edit");
       } else {
         this.isEdit = false;
-        this.title = "Create";
+        // 新增
+        this.title = this.$t("modal.title.create");
       }
       this.isShow = true;
       this.form = row || { remark: "" };

@@ -25,6 +25,7 @@ import {
     Upload,
     MessageBox,
     Message,
+    Alert,
     Notification
 } from 'element-ui';
 
@@ -51,6 +52,7 @@ Vue.use(TabPane);
 Vue.use(Tag);
 Vue.use(Icon);
 Vue.use(Upload);
+Vue.use(Alert);
 
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
