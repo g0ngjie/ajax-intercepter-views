@@ -55,7 +55,7 @@
 
 <script>
 import Modal from "./modal";
-import { confirmFunc } from "../../tool";
+import { confirmFunc } from "@/common/index";
 import { deepClone } from "@alrale/common-lib";
 
 export default {
