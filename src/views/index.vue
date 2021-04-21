@@ -13,7 +13,7 @@
             round
             plain
             @click="handleDownload"
-            >{{ $t("toolbar.download") }}</el-button
+            >{{ $t("toolbar.backup") }}</el-button
           >
           <el-upload
             action
@@ -22,7 +22,7 @@
             :show-file-list="false"
             style="margin-right: 20px"
           >
-            <el-button type="info" round>{{ $t("toolbar.upload") }}</el-button>
+            <el-button type="info" round>{{ $t("toolbar.restore") }}</el-button>
           </el-upload>
         </section>
         <el-radio-group v-model="language" @change="handleLangChange">

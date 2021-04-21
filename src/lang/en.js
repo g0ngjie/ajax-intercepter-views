@@ -58,8 +58,8 @@ export default {
   },
   confirMsg: "Are you sure you want to delete?",
   toolbar: {
-    upload: "Upload",
-    download: "Download",
+    restore: "Restore",
+    backup: "Backup",
     no_down_data: "There is no data to download",
     override_data:
       "If the upload is successful, the original file will be overwritten",

@@ -58,8 +58,8 @@ export default {
   },
   confirMsg: "确认删除?",
   toolbar: {
-    upload: "上传",
-    download: "下载",
+    restore: "恢复",
+    backup: "备份",
     no_down_data: "没有数据可以下载",
     override_data: "上传成功原文件会被覆盖",
     import_empty: "你导入了一个空列表",
