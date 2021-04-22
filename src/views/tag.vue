@@ -26,6 +26,7 @@
 <script>
 import { getRoutes, getTags, setRoutes, setTags } from "@/common/store";
 import { uniqueId } from "@alrale/common-lib";
+import { confirmFunc } from "@/common";
 // 变迁栏
 export default {
   data() {
@@ -38,6 +39,8 @@ export default {
   methods: {
     // 移除
     async handleRemove({ id }) {
+      const { ok } = await confirmFunc({ message: this.$t("confirMsg") });
+      if (!ok) return;
       const newTags = [];
       this.dynamicTags.forEach((item) => {
         if (item.id !== id) newTags.push(item);
