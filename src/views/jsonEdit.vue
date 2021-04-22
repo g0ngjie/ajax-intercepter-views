@@ -38,7 +38,7 @@ export default {
       this.cache = value;
     },
     handleSubmit() {
-      if (this.cache) this.$emit("change", this.cache);
+      this.$emit("change", this.cache || this.json);
       this.drawer = false;
     },
   },

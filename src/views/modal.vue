@@ -110,7 +110,7 @@ export default {
       }
     },
     handleJsonSubmit(json) {
-      this.form.override = JSON.stringify(json);
+      this.form.override = JSON.stringify(json, null, "\t");
     },
     // 模态展示
     async open(row) {
