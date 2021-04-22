@@ -65,6 +65,12 @@
           >
           </el-input>
         </el-form-item>
+        <el-button
+          type="primary"
+          :disabled="!form.override"
+          @click="handleOpenJsonEditor(form.override)"
+          >JSON Editor</el-button
+        >
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">{{ $t("modal.btn.cancel") }}</el-button>
@@ -73,14 +79,17 @@
         }}</el-button>
       </span>
     </el-dialog>
+    <JsonEditor ref="jsonEditor" @change="handleJsonSubmit" />
   </div>
 </template>
 
 <script>
 import { uniqueId } from "@alrale/common-lib";
 import { getTags } from "@/common/store";
+import JsonEditor from "./jsonEdit";
 
 export default {
+  components: { JsonEditor },
   data() {
     return {
       isShow: false,
@@ -91,6 +100,18 @@ export default {
     };
   },
   methods: {
+    // 打开编辑器
+    handleOpenJsonEditor(jsonStr) {
+      try {
+        const _json = JSON.parse(jsonStr);
+        this.$refs.jsonEditor.show(_json);
+      } catch (error) {
+        this.$refs.jsonEditor.show(jsonStr);
+      }
+    },
+    handleJsonSubmit(json) {
+      this.form.override = JSON.stringify(json);
+    },
     // 模态展示
     async open(row) {
       // 获取标签

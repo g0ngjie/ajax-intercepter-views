@@ -30,6 +30,9 @@ export default {
       cancel: "取 消",
     },
   },
+  drawer: {
+    btn: "确定",
+  },
   errTips:
     "所有responseText会常驻浏览器后台；注意风险把控，不用的话记得关闭哦~",
   create: "新增",

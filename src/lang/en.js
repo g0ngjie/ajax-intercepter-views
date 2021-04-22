@@ -30,6 +30,9 @@ export default {
       cancel: "Cancel",
     },
   },
+  drawer: {
+    btn: "OK",
+  },
   errTips:
     "All responseText will be resident in the browser background; pay attention to risk control, and remember to close it if you don't use it~",
   create: "Create",
