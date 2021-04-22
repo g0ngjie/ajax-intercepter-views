@@ -59,7 +59,7 @@
         >
           <el-input
             type="textarea"
-            :rows="15"
+            :rows="10"
             v-model="form.override"
             :placeholder="$t('modal.form.placeholder')"
           >
