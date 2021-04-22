@@ -24,6 +24,28 @@
             :placeholder="$t('modal.form.placeholder')"
           ></el-input>
         </el-form-item>
+        <el-form-item :label="$t('modal.form.remark.name')">
+          <el-input
+            v-model="form.remark"
+            :placeholder="$t('modal.form.placeholder')"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item :label="$t('modal.form.tag.name')">
+          <el-select
+            v-model="form.tagId"
+            :placeholder="$t('modal.form.tag.placeholder')"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="(item, index) in tags"
+              :key="index"
+              :label="item.name"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item
           :label="$t('modal.form.res.name')"
           :rules="[
@@ -43,13 +65,6 @@
           >
           </el-input>
         </el-form-item>
-        <el-form-item :label="$t('modal.form.remark.name')">
-          <el-input
-            v-model="form.remark"
-            :placeholder="$t('modal.form.placeholder')"
-          >
-          </el-input>
-        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">{{ $t("modal.btn.cancel") }}</el-button>
@@ -63,6 +78,7 @@
 
 <script>
 import { uniqueId } from "@alrale/common-lib";
+import { getTags } from "@/common/store";
 
 export default {
   data() {
@@ -71,11 +87,14 @@ export default {
       form: {},
       title: "",
       isEdit: false,
+      tags: [],
     };
   },
   methods: {
     // 模态展示
-    open(row) {
+    async open(row) {
+      // 获取标签
+      this.tags = await getTags();
       if (row) {
         this.isEdit = true;
         // 编辑

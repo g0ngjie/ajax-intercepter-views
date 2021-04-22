@@ -3,8 +3,8 @@
     <el-button type="primary" @click="handleCreate">{{
       $t("create")
     }}</el-button>
-    <section class="tab-container">
-      
+    <section class="tags">
+      <Tag @initList="initList" />
     </section>
     <section class="tips">
       <el-alert :title="$t('errTips')" type="error" :closable="false" />
@@ -60,6 +60,11 @@
         show-overflow-tooltip
       />
       <el-table-column
+        :label="$t('table.columns.tag')"
+        :formatter="fmtTag"
+        show-overflow-tooltip
+      />
+      <el-table-column
         :label="$t('table.columns.options')"
         align="center"
         width="150"
@@ -80,21 +85,33 @@
 <script>
 import Modal from "./modal";
 import { confirmFunc } from "@/common/index";
-import { deepClone } from "@alrale/common-lib";
-import { getRoutes, setRoutes } from "@/common/store";
+import { arrayToObject, deepClone, typeIs } from "@alrale/common-lib";
+import { getRoutes, getTags, setRoutes } from "@/common/store";
 import { noticeRoutes } from "@/common/notice";
+import Tag from "./tag";
 
 export default {
   components: {
     Modal,
+    Tag,
   },
   data() {
     return {
       searchForm: {},
       tableData: [],
+      // tag ORM
+      tagMapping: {},
     };
   },
   methods: {
+    // 获取tag名称
+    fmtTag({ tagId }) {
+      const map = this.tagMapping;
+      if (typeIs(map) === "object" && tagId) {
+        // 可能存在tag被删除找不到name
+        return map[tagId]?.name;
+      }
+    },
     handleSearch() {
       const { match, remark } = this.searchForm;
       if (!match && !remark) return;
@@ -155,10 +172,42 @@ export default {
       noticeRoutes(proxy_routes);
     },
     async initList() {
-      this.tableData = await getRoutes();
+      const tags = await getTags();
+      this.tagMapping = arrayToObject("id", tags);
+      const routes = await getRoutes();
+      if (typeIs(tags) === "array") {
+        if (tags.length === 0) {
+          this.tableData = routes;
+          return;
+        } else {
+          // 如果不为启用状态，展示全部
+          const emptyHits = [];
+          for (let k = 0; k < tags.length; k++) {
+            const { used } = tags[k];
+            if (used) emptyHits.push(used);
+          }
+          if (emptyHits.length === 0) {
+            this.tableData = routes;
+            return;
+          }
+        }
+        // 过滤 tag
+        const newTables = [];
+        for (let i = 0; i < routes.length; i++) {
+          const routeData = routes[i];
+          for (let j = 0; j < tags.length; j++) {
+            const { used, id } = tags[j];
+            if (used && routeData.tagId === id) {
+              newTables.push(routeData);
+              break;
+            }
+          }
+        }
+        this.tableData = newTables;
+      } else this.tableData = routes;
     },
   },
-  created() {
+  mounted() {
     this.initList();
   },
 };
@@ -166,6 +215,9 @@ export default {
 
 <style lang="scss" scoped>
 .tips {
+  margin: 10px 0;
+}
+.tags {
   margin: 10px 0;
 }
 </style>

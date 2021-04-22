@@ -19,6 +19,10 @@ export default {
       remark: {
         name: "Remark",
       },
+      tag: {
+        name: "Tag",
+        placeholder: "Please select",
+      },
       placeholder: "Please input",
     },
     btn: {
@@ -49,6 +53,7 @@ export default {
       match: "match",
       res: "responseText",
       remark: "remark",
+      tag: "Tag",
       options: "options",
     },
     btn: {

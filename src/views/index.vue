@@ -157,7 +157,7 @@ export default {
       this.syncDocTitle();
     },
   },
-  created() {
+  mounted() {
     this.initData();
   },
 };

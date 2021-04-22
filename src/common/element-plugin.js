@@ -1,33 +1,32 @@
-import Vue from 'vue';
+import Vue from "vue";
 import {
-    Dialog,
-    Input,
-    Checkbox,
-    CheckboxButton,
-    CheckboxGroup,
-    Switch,
-    Select,
-    Option,
-    OptionGroup,
-    Button,
-    ButtonGroup,
-    RadioGroup,
-    RadioButton,
-    Table,
-    TableColumn,
-    Tooltip,
-    Form,
-    FormItem,
-    Tabs,
-    TabPane,
-    Tag,
-    Icon,
-    Upload,
-    MessageBox,
-    Message,
-    Alert,
-    Notification
-} from 'element-ui';
+  Dialog,
+  Input,
+  Checkbox,
+  CheckboxButton,
+  CheckboxGroup,
+  Switch,
+  Select,
+  Option,
+  OptionGroup,
+  Button,
+  ButtonGroup,
+  RadioGroup,
+  RadioButton,
+  Table,
+  TableColumn,
+  Tooltip,
+  Form,
+  FormItem,
+  Tabs,
+  TabPane,
+  Icon,
+  Upload,
+  MessageBox,
+  Message,
+  Alert,
+  Notification,
+} from "element-ui";
 
 Vue.use(Dialog);
 Vue.use(Input);
@@ -49,7 +48,6 @@ Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Tabs);
 Vue.use(TabPane);
-Vue.use(Tag);
 Vue.use(Icon);
 Vue.use(Upload);
 Vue.use(Alert);

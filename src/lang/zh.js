@@ -19,6 +19,10 @@ export default {
       remark: {
         name: "备注",
       },
+      tag: {
+        name: "标签",
+        placeholder: "请选择",
+      },
       placeholder: "请输入",
     },
     btn: {
@@ -49,6 +53,7 @@ export default {
       match: "路径匹配",
       res: "响应数据",
       remark: "备注",
+      tag: "标签",
       options: "操作",
     },
     btn: {
