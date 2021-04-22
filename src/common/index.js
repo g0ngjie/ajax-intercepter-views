@@ -25,19 +25,21 @@ export async function confirmFunc({
   };
 }
 
-/**
- * a标签文件下载
- * @param {String} target 字符串
- * @param {String} fileName 文件名
- * @example
- * ```
- * simpleDownload(JSON.stringify({ alrale: 'simpleDownload' }, null, '\t'), 'alrale.json')
- * ```
- */
-export function simpleDownload(target, fileName) {
-  const element = document.createElement("a");
-  element.setAttribute("href", "data:text/plain;charset=utf-8," + target);
-  element.setAttribute("download", fileName);
-  element.style.display = "none";
-  element.click();
+/**提交内容 */
+export async function promptFunc({
+  message = "",
+  title = "",
+  inputValue = "",
+}) {
+  const { action, value } = await MessageBox.prompt(message, title, {
+    inputValue,
+  }).catch(() => {
+    return {
+      ok: false,
+    };
+  });
+  return {
+    ok: action === "confirm",
+    data: value,
+  };
 }

@@ -64,5 +64,6 @@ export default {
     override_data: "上传成功原文件会被覆盖",
     import_empty: "你导入了一个空列表",
     read_err: "读取异常，文件可能不是一个JSON",
+    data_err: "数据异常",
   },
 };

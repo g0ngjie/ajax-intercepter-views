@@ -65,5 +65,6 @@ export default {
       "If the upload is successful, the original file will be overwritten",
     import_empty: "You imported an empty list",
     read_err: "Read exception. The file may not be a JSON",
+    data_err: "Abnormal data",
   },
 };

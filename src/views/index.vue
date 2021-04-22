@@ -48,10 +48,13 @@ import {
   getGlobalSwitchOn,
   getRoutes,
   setRoutes,
+  getStoreAll,
+  setTags,
 } from "@/common/store";
 import { noticeSwitchOn } from "@/common/notice";
-import { confirmFunc, simpleDownload } from "@/common";
+import { confirmFunc, promptFunc } from "@/common";
 import { typeIs } from "@alrale/common-lib";
+import { simpleDownload } from "@alrale/downloads";
 export default {
   components: {
     Table,
@@ -65,16 +68,35 @@ export default {
   methods: {
     // 下载
     async handleDownload() {
-      const jsonArr = await getRoutes();
-      if (typeIs(jsonArr) !== "array") return;
-      if (jsonArr.length === 0)
+      const { ok, data } = await getStoreAll();
+      // 数据异常
+      if (!ok) return this.$message.warning(this.$t("toolbar.data_err"));
+      const { ok: isOk, data: value } = await promptFunc({
+        // 备份
+        title: this.$t("toolbar.backup"),
+        inputValue: "backup",
+      });
+      if (!isOk) return;
+      const { lang, proxy_routes, tags } = data || {};
+      if (proxy_routes.length === 0)
+        // 没有数据可以下载
         return this.$message.warning(this.$t("toolbar.no_down_data"));
-      simpleDownload(JSON.stringify(jsonArr, null, "\t"), "backup.json");
+      simpleDownload(
+        JSON.stringify({ lang, proxy_routes, tags }, null, "\t"),
+        `${value}.json`
+      );
     },
     // 上传
     handleUpload(file) {
       let reader = new FileReader();
-      const { override_data, import_empty, read_err } = this.$t("toolbar");
+      const {
+        // 上传成功原文件会被覆盖
+        override_data,
+        // 你导入了一个空列表
+        import_empty,
+        // 读取异常，文件可能不是一个JSON
+        read_err,
+      } = this.$t("toolbar");
       reader.onload = async (e) => {
         try {
           let _json = JSON.parse(e.target.result);
@@ -86,10 +108,21 @@ export default {
               message: override_data,
             });
             if (ok) {
-              if (typeIs(_json) === "array" && _json.length > 0) {
-                setRoutes(_json);
+              const { lang, proxy_routes, tags } = _json;
+              // 设置拦截列表
+              if (typeIs(proxy_routes) === "array" && proxy_routes.length > 0) {
+                setRoutes(proxy_routes);
                 this.$refs.table.initList();
               } else this.$message.warning(import_empty);
+              // 设置标签列表
+              if (typeIs(tags) === "array" && tags.length > 0) {
+                setTags(tags);
+              }
+              // 设置语言
+              if (lang) {
+                setLang(lang);
+                this.initData();
+              }
             }
           }
         } catch (err) {
