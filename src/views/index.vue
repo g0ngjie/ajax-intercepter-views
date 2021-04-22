@@ -92,8 +92,6 @@ export default {
       const {
         // 上传成功原文件会被覆盖
         override_data,
-        // 你导入了一个空列表
-        import_empty,
         // 读取异常，文件可能不是一个JSON
         read_err,
       } = this.$t("toolbar");
@@ -107,29 +105,34 @@ export default {
             const { ok } = await confirmFunc({
               message: override_data,
             });
-            if (ok) {
-              const { lang, proxy_routes, tags } = _json;
-              // 设置拦截列表
-              if (typeIs(proxy_routes) === "array" && proxy_routes.length > 0) {
-                setRoutes(proxy_routes);
-                this.$refs.table.initList();
-              } else this.$message.warning(import_empty);
-              // 设置标签列表
-              if (typeIs(tags) === "array" && tags.length > 0) {
-                setTags(tags);
-              }
-              // 设置语言
-              if (lang) {
-                setLang(lang);
-                this.initData();
-              }
-            }
-          }
+            if (ok) this.setStoreData(_json);
+          } else this.setStoreData(_json);
         } catch (err) {
           this.$message.error(read_err);
         }
       };
       reader.readAsText(file.raw);
+    },
+    setStoreData({ lang, proxy_routes, tags }) {
+      const {
+        // 你导入了一个空列表
+        import_empty,
+      } = this.$t("toolbar");
+      // 设置拦截列表
+      if (typeIs(proxy_routes) === "array" && proxy_routes.length > 0) {
+        setRoutes(proxy_routes);
+        this.$refs.table.initList();
+      } else this.$message.warning(import_empty);
+      // 设置标签列表
+      if (typeIs(tags) === "array" && tags.length > 0) {
+        setTags(tags);
+        this.$refs.table.initTags();
+      }
+      // 设置语言
+      if (lang) {
+        setLang(lang);
+        this.initData();
+      }
     },
     // 国际化
     handleLangChange(name) {

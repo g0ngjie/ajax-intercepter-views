@@ -4,7 +4,7 @@
       $t("create")
     }}</el-button>
     <section class="tags">
-      <Tag @initList="initList" />
+      <Tag @initList="initList" ref="tag" />
     </section>
     <section class="tips">
       <el-alert :title="$t('errTips')" type="error" :closable="false" />
@@ -104,6 +104,10 @@ export default {
     };
   },
   methods: {
+    // 父级刷新 tags
+    initTags() {
+      this.$refs.tag.initList();
+    },
     // 获取tag名称
     fmtTag({ tagId }) {
       const map = this.tagMapping;
