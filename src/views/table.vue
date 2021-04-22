@@ -118,7 +118,10 @@ export default {
     },
     handleSearch() {
       const { match, remark } = this.searchForm;
-      if (!match && !remark) return;
+      if (!match && !remark) {
+        this.initList();
+        return;
+      }
       const newList = [];
       if (match) {
         this.tableData.forEach((item) => {
