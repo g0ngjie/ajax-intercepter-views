@@ -126,7 +126,8 @@ export default {
           if (item.remark && item.remark.includes(remark)) newList.push(item);
         });
       }
-      this.tableData = newList;
+      if (newList.length > 0) this.initList(newList);
+      else this.initList();
     },
     handleReset() {
       this.searchForm = {};
@@ -171,10 +172,12 @@ export default {
       setRoutes(proxy_routes);
       noticeRoutes(proxy_routes);
     },
-    async initList() {
+    async initList(tables) {
+      // tag search 级联
+      if (!tables) this.searchForm = {};
       const tags = await getTags();
       this.tagMapping = arrayToObject("id", tags);
-      const routes = await getRoutes();
+      const routes = tables || (await getRoutes());
       if (typeIs(tags) === "array") {
         if (tags.length === 0) {
           this.tableData = routes;
