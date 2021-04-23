@@ -104,7 +104,7 @@ import Modal from "./modal";
 import { confirmFunc } from "@/common/index";
 import { arrayToObject, deepClone, typeIs } from "@alrale/common-lib";
 import { getRoutes, getTags, setRoutes } from "@/common/store";
-import { noticeRoutes } from "@/common/notice";
+import { noticeRoutes, chromeNotice } from "@/common/notice";
 import Tag from "./tag";
 
 export default {
@@ -249,6 +249,16 @@ export default {
               this.tableData.forEach((item) => {
                 if (item.match === match) {
                   item.hit = item.hit ? item.hit + 1 : 1;
+                  // 命中次数 太多，通知一下
+                  if (item.hit === 100) {
+                    const tagName = this.tagMapping[item.tagId]
+                      ? this.tagMapping[item.tagId].name
+                      : "";
+                    chromeNotice({
+                      title: this.$t("chrome.notice"),
+                      messages: [item.match, item.remark || "", tagName],
+                    });
+                  }
                 }
               });
               setRoutes(this.tableData);

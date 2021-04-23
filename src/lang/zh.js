@@ -78,4 +78,7 @@ export default {
     read_err: "读取异常，文件可能不是一个JSON",
     data_err: "数据异常",
   },
+  chrome: {
+    notice: "请注意当前接口命中率已达到100",
+  },
 };

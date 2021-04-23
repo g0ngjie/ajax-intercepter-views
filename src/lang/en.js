@@ -79,4 +79,7 @@ export default {
     read_err: "Read exception. The file may not be a JSON",
     data_err: "Abnormal data",
   },
+  chrome: {
+    notice: "Please note that the current interface hit rate has reached 100",
+  },
 };
