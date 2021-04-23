@@ -39,7 +39,7 @@
     </section>
     <!-- 表格 -->
     <el-table :data="tableData" stripe>
-      <el-table-column :label="$t('table.columns.switch')" width="80">
+      <el-table-column :label="$t('table.columns.switch')" width="100">
         <template slot-scope="{ row }">
           <el-switch v-model="row.switchOn" @change="handleSwitch" />
         </template>
@@ -63,7 +63,24 @@
         :label="$t('table.columns.tag')"
         :formatter="fmtTag"
         show-overflow-tooltip
+        width="100"
       />
+      <el-table-column
+        :label="$t('table.columns.hit')"
+        align="center"
+        width="100"
+      >
+        <template slot-scope="{ row }">
+          <el-tag
+            type="info"
+            v-if="row.hit"
+            closable
+            @close="handleTagClose(row)"
+          >
+            {{ row.hit }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column
         :label="$t('table.columns.options')"
         align="center"
@@ -104,6 +121,12 @@ export default {
     };
   },
   methods: {
+    // 删除hit
+    handleTagClose(row) {
+      delete row.hit;
+      setRoutes(this.tableData);
+      this.initList();
+    },
     // 父级刷新 tags
     initTags() {
       this.$refs.tag.initList();
@@ -216,9 +239,28 @@ export default {
         this.tableData = newTables;
       } else this.tableData = routes;
     },
+    // 监听命中
+    listenerFix() {
+      chrome.runtime &&
+        chrome.runtime.onMessage.addListener(({ type, to, url, match }) => {
+          if (type === "__ajax_proxy" && to === "page") {
+            const exits = this.tableData.some((item) => item.match === match);
+            if (exits) {
+              this.tableData.forEach((item) => {
+                if (item.match === match) {
+                  item.hit = item.hit ? item.hit + 1 : 1;
+                }
+              });
+              setRoutes(this.tableData);
+              this.initList();
+            }
+          }
+        });
+    },
   },
   mounted() {
     this.initList();
+    this.listenerFix();
   },
 };
 </script>

@@ -60,6 +60,7 @@ export default {
       res: "响应数据",
       remark: "备注",
       tag: "标签",
+      hit: "命中",
       options: "操作",
     },
     btn: {

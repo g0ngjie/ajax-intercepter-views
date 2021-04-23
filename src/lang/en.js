@@ -60,6 +60,7 @@ export default {
       res: "responseText",
       remark: "remark",
       tag: "Tag",
+      hit: "Hit",
       options: "options",
     },
     btn: {
