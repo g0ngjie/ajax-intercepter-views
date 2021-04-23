@@ -106,11 +106,11 @@ export default {
         const _json = JSON.parse(jsonStr);
         this.$refs.jsonEditor.show(_json);
       } catch (error) {
-        this.$refs.jsonEditor.show(jsonStr);
+        this.$message.error(this.$t("modal.msg.not_json"));
       }
     },
     handleJsonSubmit(json) {
-      this.form.override = JSON.stringify(json, null, "\t");
+      this.form.override = JSON.stringify(json);
     },
     // 模态展示
     async open(row) {

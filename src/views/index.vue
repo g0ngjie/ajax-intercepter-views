@@ -179,10 +179,10 @@ export default {
     opacity: 0;
   }
   .global-switch {
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 15px;
     padding: 0 15px;
     section {
       display: flex;

@@ -29,6 +29,9 @@ export default {
       confirm: "OK",
       cancel: "Cancel",
     },
+    msg: {
+      not_json: "JSON format error",
+    },
   },
   drawer: {
     btn: "OK",

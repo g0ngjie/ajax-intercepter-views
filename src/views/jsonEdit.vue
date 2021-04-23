@@ -53,9 +53,9 @@ export default {
     overflow: auto;
   }
   /*2.隐藏滚动条，太丑了*/
-  ::v-deep .el-drawer__container ::-webkit-scrollbar {
-    display: none;
-  }
+  // ::v-deep .el-drawer__container ::-webkit-scrollbar {
+  //   display: none;
+  // }
   ::v-deep .jsoneditor-mode-form {
     border-color: teal !important;
   }

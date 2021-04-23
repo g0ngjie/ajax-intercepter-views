@@ -29,6 +29,9 @@ export default {
       confirm: "确 定",
       cancel: "取 消",
     },
+    msg: {
+      not_json: "JSON格式错误",
+    },
   },
   drawer: {
     btn: "确定",

@@ -12,5 +12,5 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
     ? './'
     : '/',
-  outputDir: '../browser-ajax-Intercepter/page'
+  outputDir: '../ajax-proxy/page'
 };

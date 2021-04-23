@@ -224,6 +224,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.response-container {
+  padding: 0 10px;
+}
 .tips {
   margin: 10px 0;
 }
