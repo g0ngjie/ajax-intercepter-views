@@ -22,4 +22,6 @@ export const NoticeKey = {
   SWITCH: "globalSwitchOn",
   /**路由列表 */
   ROUTES: "proxy_routes",
+  /**badge */
+  BADGE: "badge",
 };

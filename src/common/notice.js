@@ -24,18 +24,7 @@ export function noticeRoutes(routes) {
   noticeMsg(NoticeKey.ROUTES, routes);
 }
 
-/**chrome 紧急通知 */
-export function chromeNotice({ title, messages }) {
-  if (chrome.runtime) {
-    const message = messages.join("\n");
-    chrome.runtime.sendMessage(chrome.runtime.id, {
-      type: "__ajax_proxy",
-      to: "background",
-      key: "notice",
-      value: {
-        title,
-        message,
-      },
-    });
-  }
+/**通知一下命中率 */
+export function noticeBadge() {
+  noticeMsg(NoticeKey.BADGE, null);
 }

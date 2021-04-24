@@ -104,7 +104,7 @@ import Modal from "./modal";
 import { confirmFunc } from "@/common/index";
 import { arrayToObject, deepClone, typeIs } from "@alrale/common-lib";
 import { getRoutes, getTags, setRoutes } from "@/common/store";
-import { noticeRoutes, chromeNotice } from "@/common/notice";
+import { noticeRoutes, noticeBadge } from "@/common/notice";
 import Tag from "./tag";
 
 export default {
@@ -125,6 +125,7 @@ export default {
     handleTagClose(row) {
       delete row.hit;
       setRoutes(this.tableData);
+      noticeBadge();
       this.initList();
     },
     // 父级刷新 tags
@@ -239,37 +240,11 @@ export default {
         this.tableData = newTables;
       } else this.tableData = routes;
     },
-    // 监听命中
+    // 监听 准备刷新
     listenerFix() {
       chrome.runtime &&
-        chrome.runtime.onMessage.addListener(({ type, to, url, match }) => {
-          if (type === "__ajax_proxy" && to === "page") {
-            const exits = this.tableData.some((item) => item.match === match);
-            if (exits) {
-              this.tableData.forEach((item) => {
-                if (item.match === match) {
-                  item.hit = item.hit ? item.hit + 1 : 1;
-                  // 命中次数 太多，通知一下
-                  let tooHigh = item.hit === 50;
-                  // 每隔10次提醒一下
-                  if (!tooHigh && item.hit > 50) {
-                    tooHigh = (item.hit - 50) % 10 === 0;
-                  }
-                  if (tooHigh) {
-                    const tagName = this.tagMapping[item.tagId]
-                      ? this.tagMapping[item.tagId].name
-                      : "";
-                    chromeNotice({
-                      title: this.$t("chrome.notice"),
-                      messages: [item.match, item.remark || "", tagName],
-                    });
-                  }
-                }
-              });
-              setRoutes(this.tableData);
-              this.initList();
-            }
-          }
+        chrome.runtime.onMessage.addListener(({ type, to }) => {
+          if (type === "__ajax_proxy" && to === "page") this.initList();
         });
     },
   },
