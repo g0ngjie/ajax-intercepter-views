@@ -250,7 +250,12 @@ export default {
                 if (item.match === match) {
                   item.hit = item.hit ? item.hit + 1 : 1;
                   // 命中次数 太多，通知一下
-                  if (item.hit === 100) {
+                  let tooHigh = item.hit === 50;
+                  // 每隔10次提醒一下
+                  if (!tooHigh && item.hit > 50) {
+                    tooHigh = (item.hit - 50) % 10 === 0;
+                  }
+                  if (tooHigh) {
                     const tagName = this.tagMapping[item.tagId]
                       ? this.tagMapping[item.tagId].name
                       : "";

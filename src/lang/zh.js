@@ -79,6 +79,6 @@ export default {
     data_err: "数据异常",
   },
   chrome: {
-    notice: "请注意当前接口命中率已达到100",
+    notice: "命中率多少有点高了",
   },
 };

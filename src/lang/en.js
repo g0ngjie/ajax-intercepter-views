@@ -80,6 +80,6 @@ export default {
     data_err: "Abnormal data",
   },
   chrome: {
-    notice: "Please note that the current interface hit rate has reached 100",
+    notice: "The percentage of hits is a little high",
   },
 };

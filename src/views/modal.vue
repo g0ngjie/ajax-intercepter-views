@@ -36,6 +36,7 @@
             v-model="form.tagId"
             :placeholder="$t('modal.form.tag.placeholder')"
             style="width: 100%"
+            clearable
           >
             <el-option
               v-for="(item, index) in tags"
