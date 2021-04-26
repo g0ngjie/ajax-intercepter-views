@@ -189,14 +189,16 @@ export default {
       this.tableData.push(row);
       this.modifyNotice(this.tableData);
     },
-    editData(row) {
+    async editData(row) {
+      const routes = await getRoutes();
       const newList = [];
-      this.tableData.forEach((item) => {
+      routes.forEach((item) => {
         if (item.id == row.id) newList.push(row);
         else newList.push(item);
       });
       this.tableData = newList;
       this.modifyNotice(newList);
+      this.initList(newList);
     },
     // 通知
     modifyNotice(proxy_routes) {
