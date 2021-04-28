@@ -25,6 +25,22 @@ export default {
         placeholder: "Please select",
       },
       placeholder: "Please input",
+      domain: {
+        name: "Domain",
+        msg: "Domain name information cannot be empty",
+        placeholder: "http|https://foo.com",
+      },
+      redirect: {
+        name: "Redirect",
+        msg: "The redirection address cannot be empty",
+        placeholder: "http|https://foo2.com",
+      },
+      headers: {
+        name: "Headers",
+      },
+      description: {
+        name: "Description",
+      },
     },
     btn: {
       confirm: "OK",

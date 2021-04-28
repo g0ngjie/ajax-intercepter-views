@@ -8,70 +8,58 @@
       width="80%"
     >
       <el-form :model="form" ref="form">
+        <!-- 域名 -->
         <el-form-item
-          :label="$t('modal.form.match.name')"
+          :label="$t('modal.form.domain.name')"
           :rules="[
             {
               required: true,
               trigger: 'change',
-              message: $t('modal.form.match.msg'),
+              message: $t('modal.form.domain.msg'),
             },
           ]"
-          prop="match"
+          prop="domain"
         >
           <el-input
-            v-model="form.match"
-            :placeholder="$t('modal.form.placeholder')"
+            v-model="form.domain"
+            :placeholder="$t('modal.form.domain.placeholder')"
           ></el-input>
         </el-form-item>
+        <!-- 重定向 -->
+        <el-form-item
+          :label="$t('modal.form.redirect.name')"
+          :rules="[
+            {
+              required: true,
+              trigger: 'change',
+              message: $t('modal.form.redirect.msg'),
+            },
+          ]"
+          prop="redirect"
+        >
+          <el-input
+            v-model="form.redirect"
+            :placeholder="$t('modal.form.redirect.placeholder')"
+          ></el-input>
+        </el-form-item>
+        <!-- 请求头 -->
+        <el-form-item :label="$t('modal.form.headers.name')">
+          <el-input
+            v-model="form.headers"
+            :placeholder="$t('modal.form.placeholder')"
+          >
+          </el-input>
+        </el-form-item>
+        <!-- 备注 -->
         <el-form-item :label="$t('modal.form.remark.name')">
           <el-input
+            type="textarea"
+            :rows="5"
             v-model="form.remark"
             :placeholder="$t('modal.form.placeholder')"
           >
           </el-input>
         </el-form-item>
-        <el-form-item :label="$t('modal.form.tag.name')">
-          <el-select
-            v-model="form.tagId"
-            :placeholder="$t('modal.form.tag.placeholder')"
-            style="width: 100%"
-            clearable
-          >
-            <el-option
-              v-for="(item, index) in tags"
-              :key="index"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          :label="$t('modal.form.res.name')"
-          :rules="[
-            {
-              required: true,
-              trigger: 'change',
-              message: $t('modal.form.res.msg'),
-            },
-          ]"
-          prop="override"
-        >
-          <el-input
-            type="textarea"
-            :rows="10"
-            v-model="form.override"
-            :placeholder="$t('modal.form.placeholder')"
-          >
-          </el-input>
-        </el-form-item>
-        <el-button
-          type="primary"
-          :disabled="!form.override"
-          @click="handleOpenJsonEditor(form.override)"
-          >JSON Editor</el-button
-        >
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">{{ $t("modal.btn.cancel") }}</el-button>
@@ -98,15 +86,6 @@ export default {
     };
   },
   methods: {
-    // 打开编辑器
-    handleOpenJsonEditor(jsonStr) {
-      try {
-        const _json = JSON.parse(jsonStr);
-        this.$refs.jsonEditor.show(_json);
-      } catch (error) {
-        this.$message.error(this.$t("modal.msg.not_json"));
-      }
-    },
     handleJsonSubmit(json) {
       this.form.override = JSON.stringify(json);
     },

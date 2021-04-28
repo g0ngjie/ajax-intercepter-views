@@ -25,6 +25,22 @@ export default {
         placeholder: "请选择",
       },
       placeholder: "请输入",
+      domain: {
+        name: "域名",
+        msg: "域名信息不能为空",
+        placeholder: "http|https://foo.com",
+      },
+      redirect: {
+        name: "重定向",
+        msg: "重定向地址不能为空",
+        placeholder: "http|https://foo2.com",
+      },
+      headers: {
+        name: "请求头",
+      },
+      description: {
+        name: "描述",
+      },
     },
     btn: {
       confirm: "确 定",
