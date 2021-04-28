@@ -3,13 +3,11 @@
     <el-button type="primary" @click="handleCreate">{{
       $t("create")
     }}</el-button>
-    <section class="tips">
-      <el-alert :title="$t('errTips')" type="error" :closable="false" />
-    </section>
-    <!-- <Modal ref="modal" @putData="putData" @editData="editData" /> -->
+
+    <Modal ref="modal" @putData="putData" @editData="editData" />
 
     <!-- 表格 -->
-    <el-table :data="tableData" stripe>
+    <el-table :data="tableData" stripe style="margin-top: 20px">
       <el-table-column :label="$t('table.columns.switch')" width="100">
         <template slot-scope="{ row }">
           <el-switch v-model="row.switchOn" @change="handleSwitch" />
@@ -71,7 +69,7 @@
 </template>
 
 <script>
-// import Modal from "./modal";
+import Modal from "./modal";
 import { confirmFunc } from "@/common/index";
 import { arrayToObject, deepClone, typeIs } from "@alrale/common-lib";
 import { getRoutes, getTags, setRoutes } from "@/common/store";
@@ -79,7 +77,7 @@ import { noticeRoutes, noticeBadge } from "@/common/notice";
 
 export default {
   components: {
-    // Modal,
+    Modal,
   },
   data() {
     return {
@@ -229,8 +227,5 @@ export default {
 <style lang="scss" scoped>
 .request-container {
   padding: 0 10px;
-}
-.tips {
-  margin: 10px 0;
 }
 </style>

@@ -84,14 +84,20 @@
       <el-table-column
         :label="$t('table.columns.options')"
         align="center"
-        width="150"
+        width="220"
       >
         <template slot-scope="{ row }">
-          <el-button @click="handleEdit(row)" plain>{{
+          <!-- 编辑 -->
+          <el-button @click="handleEdit(row)" round plain>{{
             $t("table.btn.edit")
           }}</el-button>
-          <el-button type="danger" @click="handleDel(row)" plain>{{
+          <!-- 删除 -->
+          <el-button type="danger" round @click="handleDel(row)" plain>{{
             $t("table.btn.del")
+          }}</el-button>
+          <!-- 复制 -->
+          <el-button type="primary" round @click="handleCopy(row)" plain>{{
+            $t("table.btn.copy")
           }}</el-button>
         </template>
       </el-table-column>
@@ -102,7 +108,7 @@
 <script>
 import Modal from "./modal";
 import { confirmFunc } from "@/common/index";
-import { arrayToObject, deepClone, typeIs } from "@alrale/common-lib";
+import { arrayToObject, deepClone, typeIs, uniqueId } from "@alrale/common-lib";
 import { getRoutes, getTags, setRoutes } from "@/common/store";
 import { noticeRoutes, noticeBadge } from "@/common/notice";
 import Tag from "./tag";
@@ -174,16 +180,33 @@ export default {
     handleSwitch() {
       this.modifyNotice(this.tableData);
     },
+    // 删除
     async handleDel({ id }) {
       const { ok } = await confirmFunc({ message: this.$t("confirMsg") });
       if (ok) {
         const newList = [];
-        this.tableData.forEach((item) => {
+        const routes = await getRoutes();
+        routes.forEach((item) => {
           if (item.id != id) newList.push(item);
         });
-        this.tableData = newList;
         this.modifyNotice(newList);
+        this.initList(newList);
       }
+    },
+    // 复制
+    async handleCopy(row) {
+      const routes = await getRoutes();
+      let remark = row.remark || "";
+      if (!remark.includes("[ -- copy -- ]"))
+        remark = "[ -- copy -- ]  " + remark;
+      routes.push({
+        ...row,
+        remark,
+        switchOn: false,
+        id: uniqueId(),
+      });
+      this.modifyNotice(routes);
+      this.initList(routes);
     },
     putData(row) {
       this.tableData.push(row);
@@ -196,7 +219,6 @@ export default {
         if (item.id == row.id) newList.push(row);
         else newList.push(item);
       });
-      this.tableData = newList;
       this.modifyNotice(newList);
       this.initList(newList);
     },

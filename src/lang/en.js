@@ -67,6 +67,7 @@ export default {
     btn: {
       del: "Delete",
       edit: "Edit",
+      copy: "Copy",
     },
   },
   confirMsg: "Are you sure you want to delete?",

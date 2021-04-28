@@ -67,6 +67,7 @@ export default {
     btn: {
       del: "删除",
       edit: "编辑",
+      copy: "复制",
     },
   },
   confirMsg: "确认删除?",
