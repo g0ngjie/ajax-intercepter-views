@@ -44,11 +44,84 @@
         </el-form-item>
         <!-- 请求头 -->
         <el-form-item :label="$t('modal.form.headers.name')">
-          <el-input
-            v-model="form.headers"
-            :placeholder="$t('modal.form.placeholder')"
-          >
-          </el-input>
+          <section style="padding: 0 20px">
+            <!-- 新增槽 -->
+            <el-button
+              style="margin-bottom: 10px"
+              size="mini"
+              type="text"
+              @click="handleHeaderAdd"
+              >+{{ $t("modal.form.headers.append") }}</el-button
+            >
+            <el-row :gutter="24" style="margin-bottom: 10px">
+              <el-col :span="7">{{ $t("modal.form.headers.key") }}</el-col>
+              <el-col :span="7">{{ $t("modal.form.headers.value") }}</el-col>
+              <el-col :span="7">{{
+                $t("modal.form.headers.description")
+              }}</el-col>
+              <el-col :span="3">{{ $t("modal.form.headers.option") }}</el-col>
+            </el-row>
+            <el-row
+              :gutter="24"
+              v-for="(item, index) in form.headers"
+              :key="index"
+              class="complex-row"
+            >
+              <el-col :span="7">
+                <!-- key -->
+                <el-form-item
+                  :rules="[
+                    {
+                      required: true,
+                      message: $t('modal.form.headers.keyMsg'),
+                      trigger: 'change',
+                    },
+                  ]"
+                  :prop="`headers[${index}].key`"
+                >
+                  <el-input
+                    v-model="form.headers[index].key"
+                    :placeholder="$t('modal.form.placeholder')"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="7">
+                <!-- value -->
+                <el-form-item
+                  :rules="[
+                    {
+                      required: true,
+                      message: $t('modal.form.headers.valueMsg'),
+                      trigger: 'change',
+                    },
+                  ]"
+                  :prop="`headers[${index}].value`"
+                >
+                  <el-input
+                    v-model="form.headers[index].value"
+                    :placeholder="$t('modal.form.placeholder')"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="7">
+                <!-- description -->
+                <el-form-item>
+                  <el-input
+                    v-model="form.headers[index].description"
+                    :placeholder="$t('modal.form.placeholder')"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="3">
+                <el-button
+                  type="text"
+                  class="text-btn-underline"
+                  @click.stop="handleDel(index)"
+                  >{{ $t("modal.form.headers.delete") }}</el-button
+                >
+              </el-col>
+            </el-row>
+          </section>
         </el-form-item>
         <!-- 备注 -->
         <el-form-item :label="$t('modal.form.remark.name')">
@@ -86,8 +159,16 @@ export default {
     };
   },
   methods: {
-    handleJsonSubmit(json) {
-      this.form.override = JSON.stringify(json);
+    handleHeaderAdd() {
+      this.form.headers.push({
+        description: "",
+        key: "",
+        value: "",
+      });
+    },
+    // 删除header行
+    handleDel(index) {
+      this.form.headers.splice(index, 1);
     },
     // 模态展示
     async open(row) {
@@ -103,7 +184,7 @@ export default {
         this.title = this.$t("modal.title.create");
       }
       this.isShow = true;
-      this.form = row || { remark: "" };
+      this.form = row || { remark: "", headers: [] };
       this.$nextTick(() => this.$refs.form.clearValidate());
     },
     // 模态关闭

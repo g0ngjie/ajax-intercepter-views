@@ -28,4 +28,8 @@ export const NoticeKey = {
   ROUTES: "proxy_routes",
   /**badge */
   BADGE: "badge",
+  /**模式 */
+  MODE: "mode",
+  /**重定向列表 */
+  REDIRECT: "redirect",
 };

@@ -37,9 +37,14 @@ export default {
       },
       headers: {
         name: "请求头",
-      },
-      description: {
-        name: "描述",
+        key: "Key",
+        value: "Value",
+        option: "选项",
+        append: "添加",
+        delete: "删除",
+        keyMsg: "key值不能为空",
+        valueMsg: "value值不能为空",
+        description: "描述",
       },
     },
     btn: {
@@ -78,6 +83,8 @@ export default {
       remark: "备注",
       tag: "标签",
       hit: "命中",
+      domain: "域名",
+      redirect: "重定向",
       options: "操作",
     },
     btn: {

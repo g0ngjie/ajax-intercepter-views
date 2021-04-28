@@ -73,7 +73,7 @@ import {
   setMode,
   getMode,
 } from "@/common/store";
-import { noticeSwitchOn } from "@/common/notice";
+import { noticeSwitchOn, noticeMode } from "@/common/notice";
 import { confirmFunc, promptFunc } from "@/common";
 import { typeIs } from "@alrale/common-lib";
 import { simpleDownload } from "@alrale/downloads";
@@ -165,6 +165,7 @@ export default {
     },
     // 代理模式
     handleModeChange(name) {
+      noticeMode(name);
       setMode(name);
     },
     handleSwitch(bool) {

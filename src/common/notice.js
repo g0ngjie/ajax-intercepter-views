@@ -28,3 +28,13 @@ export function noticeRoutes(routes) {
 export function noticeBadge() {
   noticeMsg(NoticeKey.BADGE, null);
 }
+
+/**同步给core 模式 */
+export function noticeMode(value) {
+  noticeMsg(NoticeKey.MODE, value);
+}
+
+/**同步给cord 重定向列表 */
+export function noticeRedirects(value) {
+  noticeMsg(NoticeKey.REDIRECT, value);
+}

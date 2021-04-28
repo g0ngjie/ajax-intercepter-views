@@ -19,6 +19,8 @@ import {
   Alert,
   Drawer,
   Tag,
+  Row,
+  Col,
 } from "element-ui";
 
 Vue.use(Dialog);
@@ -38,6 +40,8 @@ Vue.use(Upload);
 Vue.use(Alert);
 Vue.use(Drawer);
 Vue.use(Tag);
+Vue.use(Row);
+Vue.use(Col);
 
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;

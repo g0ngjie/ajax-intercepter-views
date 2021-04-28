@@ -89,3 +89,15 @@ export async function getMode() {
   if (ok) return data;
   return "interceptor";
 }
+
+/**同步 重定向列表 */
+export function setRedirects(value) {
+  setStore(StoreType.REDIRECT, value);
+}
+
+/**获取 重定向列表 */
+export async function getRedirects() {
+  const { ok, data } = await getStore(StoreType.REDIRECT);
+  if (ok) return data;
+  return [];
+}

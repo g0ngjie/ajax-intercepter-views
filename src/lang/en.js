@@ -37,9 +37,14 @@ export default {
       },
       headers: {
         name: "Headers",
-      },
-      description: {
-        name: "Description",
+        key: "Key",
+        value: "Value",
+        option: "Option",
+        append: "Append",
+        delete: "Delete",
+        keyMsg: "key cannot be empty",
+        valueMsg: "value cannot be empty",
+        description: "Description",
       },
     },
     btn: {
@@ -78,6 +83,8 @@ export default {
       remark: "remark",
       tag: "Tag",
       hit: "Hit",
+      domain: "Domain",
+      redirect: "Redirect",
       options: "options",
     },
     btn: {
