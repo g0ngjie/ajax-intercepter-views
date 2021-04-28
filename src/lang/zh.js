@@ -1,6 +1,7 @@
 export default {
   document: {
-    title: "拦截器",
+    interceptor: "拦截器",
+    redirector: "重定向",
   },
   modal: {
     title: {

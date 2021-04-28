@@ -1,6 +1,7 @@
 export default {
   document: {
-    title: "Interceptor",
+    interceptor: "Interceptor",
+    redirector: "Redirector",
   },
   modal: {
     title: {

@@ -11,6 +11,10 @@ export const StoreType = {
   ROUTES: "proxy_routes",
   /**标签 */
   TAGS: "tags",
+  /**设置模式 */
+  MODE: "mode",
+  /**重定向 */
+  REDIRECT: "redirect",
 };
 
 /**

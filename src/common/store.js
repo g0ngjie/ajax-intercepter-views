@@ -77,3 +77,15 @@ export async function getTags() {
   if (ok) return data;
   return [];
 }
+
+/**同步模式状态 */
+export function setMode(value) {
+  setStore(StoreType.MODE, value);
+}
+
+/**获取模式 */
+export async function getMode() {
+  const { ok, data } = await getStore(StoreType.MODE);
+  if (ok) return data;
+  return "interceptor";
+}

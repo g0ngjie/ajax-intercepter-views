@@ -24,11 +24,25 @@
           >
             <el-button type="info" round>{{ $t("toolbar.restore") }}</el-button>
           </el-upload>
+          <!-- 模式选择 -->
+          <el-radio-group
+            style="margin-right: 10px"
+            v-model="currentMode"
+            @change="handleModeChange"
+          >
+            <el-radio-button label="interceptor">{{
+              $t("document.interceptor")
+            }}</el-radio-button>
+            <el-radio-button label="redirector">{{
+              $t("document.redirector")
+            }}</el-radio-button>
+          </el-radio-group>
+          <!-- 国际化 -->
+          <el-radio-group v-model="language" @change="handleLangChange">
+            <el-radio-button label="en">En</el-radio-button>
+            <el-radio-button label="zh">汉</el-radio-button>
+          </el-radio-group>
         </section>
-        <el-radio-group v-model="language" @change="handleLangChange">
-          <el-radio-button label="en">En</el-radio-button>
-          <el-radio-button label="zh">汉</el-radio-button>
-        </el-radio-group>
       </section>
     </div>
     <transition name="fade" mode="out-in">
@@ -50,6 +64,8 @@ import {
   setRoutes,
   getStoreAll,
   setTags,
+  setMode,
+  getMode,
 } from "@/common/store";
 import { noticeSwitchOn } from "@/common/notice";
 import { confirmFunc, promptFunc } from "@/common";
@@ -62,7 +78,8 @@ export default {
   data() {
     return {
       switchOn: false,
-      language: "en",
+      language: "",
+      currentMode: "",
     };
   },
   methods: {
@@ -138,17 +155,16 @@ export default {
     handleLangChange(name) {
       this.$i18n.locale = name;
       setLang(name);
-      this.syncDocTitle();
+    },
+    // 代理模式
+    handleModeChange(name) {
+      setMode(name);
     },
     handleSwitch(bool) {
       // 同步
       noticeSwitchOn(bool);
       // 数据处理
       setGlobalSwitchOn(bool);
-    },
-    // 同步标题
-    syncDocTitle() {
-      document.title = this.$t("document.title");
     },
     async initData() {
       // 获取 开关状态
@@ -157,10 +173,10 @@ export default {
       const lang = await getLang();
       this.language = lang;
       this.$i18n.locale = lang;
-      this.syncDocTitle();
+      this.currentMode = await getMode();
     },
   },
-  mounted() {
+  created() {
     this.initData();
   },
 };
