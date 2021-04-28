@@ -46,7 +46,12 @@
       </section>
     </div>
     <transition name="fade" mode="out-in">
-      <Table v-if="switchOn" ref="table" />
+      <section v-if="switchOn">
+        <transition name="fade" mode="out-in">
+          <IntercepTable v-if="currentMode === 'interceptor'" ref="table" />
+          <RedirecTable v-else ref="redirecTable" />
+        </transition>
+      </section>
       <div v-else class="closed-container">
         <i class="el-icon-close-notification"></i>
       </div>
@@ -54,7 +59,8 @@
   </div>
 </template>
 <script>
-import Table from "./table";
+import IntercepTable from "./interceptor/table";
+import RedirecTable from "./redirector/table";
 import {
   getLang,
   setLang,
@@ -73,7 +79,8 @@ import { typeIs } from "@alrale/common-lib";
 import { simpleDownload } from "@alrale/downloads";
 export default {
   components: {
-    Table,
+    IntercepTable,
+    RedirecTable,
   },
   data() {
     return {
