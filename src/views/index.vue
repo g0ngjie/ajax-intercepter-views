@@ -7,6 +7,7 @@
       </section>
       <section>
         <section v-if="switchOn">
+          <!-- 备份 -->
           <el-button
             style="margin-right: 10px"
             type="info"
@@ -15,6 +16,7 @@
             @click="handleDownload"
             >{{ $t("toolbar.backup") }}</el-button
           >
+          <!-- 数据恢复 -->
           <el-upload
             action
             :auto-upload="false"
@@ -72,6 +74,7 @@ import {
   setTags,
   setMode,
   getMode,
+  setRedirects,
 } from "@/common/store";
 import { noticeSwitchOn, noticeMode } from "@/common/notice";
 import { confirmFunc, promptFunc } from "@/common";
@@ -101,12 +104,16 @@ export default {
         inputValue: "backup",
       });
       if (!isOk) return;
-      const { lang, proxy_routes, tags } = data || {};
+      const { lang, proxy_routes, tags, mode, redirect } = data || {};
       if (proxy_routes.length === 0)
         // 没有数据可以下载
         return this.$message.warning(this.$t("toolbar.no_down_data"));
       simpleDownload(
-        JSON.stringify({ lang, proxy_routes, tags }, null, "\t"),
+        JSON.stringify(
+          { lang, proxy_routes, tags, mode, redirect },
+          null,
+          "\t"
+        ),
         `${value}.json`
       );
     },
@@ -137,7 +144,7 @@ export default {
       };
       reader.readAsText(file.raw);
     },
-    setStoreData({ lang, proxy_routes, tags }) {
+    setStoreData({ lang, proxy_routes, tags, mode, redirect }) {
       const {
         // 你导入了一个空列表
         import_empty,
@@ -145,7 +152,7 @@ export default {
       // 设置拦截列表
       if (typeIs(proxy_routes) === "array" && proxy_routes.length > 0) {
         setRoutes(proxy_routes);
-        this.$refs.table.initList();
+        this.$refs.table?.initList();
       } else this.$message.warning(import_empty);
       // 设置标签列表
       if (typeIs(tags) === "array" && tags.length > 0) {
@@ -156,6 +163,16 @@ export default {
       if (lang) {
         setLang(lang);
         this.initData();
+      }
+      // 设置当前模式
+      if (mode) {
+        setMode(mode);
+        this.currentMode;
+      }
+      // 设置重定向列表
+      if (redirect) {
+        setRedirects(redirect);
+        this.$refs.redirecTable?.initList();
       }
     },
     // 国际化

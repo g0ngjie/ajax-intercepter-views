@@ -22,10 +22,13 @@ function setStore(k, v) {
 export function getStoreAll() {
   return new Promise((resolve) => {
     if (chrome.storage) {
-      const { LANG, SWITCH, ROUTES, TAGS } = StoreType;
-      chrome.storage.local.get([LANG, SWITCH, ROUTES, TAGS], (result) => {
-        resolve({ ok: true, data: result });
-      });
+      const { LANG, SWITCH, ROUTES, TAGS, MODE, REDIRECT } = StoreType;
+      chrome.storage.local.get(
+        [LANG, SWITCH, ROUTES, TAGS, MODE, REDIRECT],
+        (result) => {
+          resolve({ ok: true, data: result });
+        }
+      );
     } else resolve({ ok: false });
   });
 }
