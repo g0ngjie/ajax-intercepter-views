@@ -157,7 +157,7 @@ export default {
       // 设置标签列表
       if (typeIs(tags) === "array" && tags.length > 0) {
         setTags(tags);
-        this.$refs.table.initTags();
+        this.$refs.table?.initTags();
       }
       // 设置语言
       if (lang) {
@@ -170,7 +170,7 @@ export default {
         this.currentMode;
       }
       // 设置重定向列表
-      if (redirect) {
+      if (typeIs(redirect) === "array" && redirect.length > 0) {
         setRedirects(redirect);
         this.$refs.redirecTable?.initList();
       }
