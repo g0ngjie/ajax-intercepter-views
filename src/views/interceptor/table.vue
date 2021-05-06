@@ -266,8 +266,8 @@ export default {
     },
     // 监听 准备刷新
     listenerFix() {
-      chrome.runtime &&
-        chrome.runtime.onMessage.addListener(({ type, to }) => {
+      browser.runtime &&
+        browser.runtime.onMessage.addListener(({ type, to }) => {
           if (type === "__ajax_proxy" && to === "page") this.initList();
         });
     },

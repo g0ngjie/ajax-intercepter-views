@@ -4,8 +4,8 @@ import { NoticeKey } from "./enum";
 
 // 发送给background.js
 function noticeMsg(key, value) {
-  if (chrome.runtime) {
-    chrome.runtime.sendMessage(chrome.runtime.id, {
+  if (browser.runtime) {
+    browser.runtime.sendMessage(browser.runtime.id, {
       type: "__ajax_proxy",
       to: "background",
       key,

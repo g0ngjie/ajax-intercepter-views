@@ -1,10 +1,11 @@
+import { deepClone } from "@alrale/common-lib";
 import { StoreType } from "./enum";
 
 /**获取数据 */
 function getStore(key) {
   return new Promise((resolve) => {
-    if (chrome.storage) {
-      chrome.storage.local.get(key, (result) => {
+    if (browser.storage) {
+      browser.storage.local.get(key, (result) => {
         if (result.hasOwnProperty(key))
           resolve({ ok: true, data: result[key] });
         else resolve({ ok: false });
@@ -15,15 +16,17 @@ function getStore(key) {
 
 /**保存数据 */
 function setStore(k, v) {
-  chrome.storage && chrome.storage.local.set({ [k]: v });
+  // 清除vue对象上的原型链
+  const value = deepClone(v);
+  browser.storage && browser.storage.local.set({ [k]: value });
 }
 
 /**获取所有 */
 export function getStoreAll() {
   return new Promise((resolve) => {
-    if (chrome.storage) {
+    if (browser.storage) {
       const { LANG, SWITCH, ROUTES, TAGS, MODE, REDIRECT } = StoreType;
-      chrome.storage.local.get(
+      browser.storage.local.get(
         [LANG, SWITCH, ROUTES, TAGS, MODE, REDIRECT],
         (result) => {
           resolve({ ok: true, data: result });
