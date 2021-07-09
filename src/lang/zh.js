@@ -13,6 +13,10 @@ export default {
         name: "路径匹配",
         msg: "请求路径不能为空",
       },
+      filterType: {
+        normal: "普通",
+        regex: "正则",
+      },
       res: {
         name: "响应数据",
         msg: "响应数据不能为空",
@@ -46,6 +50,7 @@ export default {
         valueMsg: "value值不能为空",
         description: "描述",
       },
+      whitelist: "白名单",
     },
     btn: {
       confirm: "确 定",
@@ -79,6 +84,7 @@ export default {
     columns: {
       switch: "状态",
       match: "路径匹配",
+      matchType: "匹配类型",
       res: "响应数据",
       remark: "备注",
       tag: "标签",

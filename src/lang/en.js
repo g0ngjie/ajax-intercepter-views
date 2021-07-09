@@ -13,6 +13,10 @@ export default {
         name: "Match URL",
         msg: "match is required",
       },
+      filterType: {
+        normal: "Normal",
+        regex: "Regex",
+      },
       res: {
         name: "ResponseText",
         msg: "response text is required",
@@ -46,6 +50,7 @@ export default {
         valueMsg: "value cannot be empty",
         description: "Description",
       },
+      whitelist: "Whitelist",
     },
     btn: {
       confirm: "OK",
@@ -79,6 +84,7 @@ export default {
     columns: {
       switch: "switch",
       match: "match",
+      matchType: 'Match type',
       res: "responseText",
       remark: "remark",
       tag: "Tag",

@@ -23,7 +23,22 @@
           <el-input
             v-model="form.domain"
             :placeholder="$t('modal.form.domain.placeholder')"
-          ></el-input>
+          >
+            <el-select
+              style="width: 90px;"
+              v-model="form.filterType"
+              slot="prepend"
+            >
+              <el-option
+                :label="$t('modal.form.filterType.normal')"
+                value="normal"
+              ></el-option>
+              <el-option
+                :label="$t('modal.form.filterType.regex')"
+                value="regex"
+              ></el-option>
+            </el-select>
+          </el-input>
         </el-form-item>
         <!-- 重定向 -->
         <el-form-item
@@ -65,7 +80,6 @@
               :gutter="24"
               v-for="(item, index) in form.headers"
               :key="index"
-              class="complex-row"
             >
               <el-col :span="7">
                 <!-- key -->
@@ -123,6 +137,35 @@
             </el-row>
           </section>
         </el-form-item>
+        <!-- 白名单列表 -->
+        <el-form-item :label="$t('modal.form.whitelist')">
+          <section style="padding: 0 20px">
+            <!-- 新增槽 -->
+            <el-button
+              style="margin-bottom: 10px"
+              size="mini"
+              type="text"
+              @click="handleWhitelistAdd"
+              >+{{ $t("modal.form.headers.append") }}</el-button
+            >
+            <el-row
+              v-for="(item, index) in form.whitelist"
+              :key="index"
+              style="margin-bottom: 5px"
+            >
+              <el-input
+                :placeholder="$t('modal.form.placeholder')"
+                v-model="form.whitelist[index]"
+              >
+                <el-button
+                  slot="append"
+                  icon="el-icon-delete"
+                  @click.stop="handleDelWhite(index)"
+                />
+              </el-input>
+            </el-row>
+          </section>
+        </el-form-item>
         <!-- 备注 -->
         <el-form-item :label="$t('modal.form.remark.name')">
           <el-input
@@ -159,6 +202,15 @@ export default {
     };
   },
   methods: {
+    // 白名单添加
+    handleWhitelistAdd() {
+      this.form.whitelist.push("");
+    },
+    // 删除白名单
+    handleDelWhite(index) {
+      this.form.whitelist.splice(index, 1);
+    },
+    // 请求头添加
     handleHeaderAdd() {
       this.form.headers.push({
         description: "",
@@ -184,7 +236,12 @@ export default {
         this.title = this.$t("modal.title.create");
       }
       this.isShow = true;
-      this.form = row || { remark: "", headers: [] };
+      this.form = row || {
+        remark: "",
+        headers: [],
+        whitelist: [],
+        filterType: "normal",
+      };
       this.$nextTick(() => this.$refs.form.clearValidate());
     },
     // 模态关闭

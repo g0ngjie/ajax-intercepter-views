@@ -22,7 +22,22 @@
           <el-input
             v-model="form.match"
             :placeholder="$t('modal.form.placeholder')"
-          ></el-input>
+          >
+            <el-select
+              style="width: 90px;"
+              v-model="form.filterType"
+              slot="prepend"
+            >
+              <el-option
+                :label="$t('modal.form.filterType.normal')"
+                value="normal"
+              ></el-option>
+              <el-option
+                :label="$t('modal.form.filterType.regex')"
+                value="regex"
+              ></el-option>
+            </el-select>
+          </el-input>
         </el-form-item>
         <el-form-item :label="$t('modal.form.remark.name')">
           <el-input
@@ -127,7 +142,7 @@ export default {
         this.title = this.$t("modal.title.create");
       }
       this.isShow = true;
-      this.form = row || { remark: "" };
+      this.form = row || { remark: "", filterType: "normal" };
       this.$nextTick(() => this.$refs.form.clearValidate());
     },
     // 模态关闭

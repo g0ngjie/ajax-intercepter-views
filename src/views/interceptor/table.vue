@@ -44,6 +44,11 @@
           <el-switch v-model="row.switchOn" @change="handleSwitch" />
         </template>
       </el-table-column>
+      <el-table-column :label="$t('table.columns.matchType')" width="100">
+        <template slot-scope="{ row }">
+          {{ $t("modal.form.filterType")[row.filterType || "normal"] }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="match"
         :label="$t('table.columns.match')"
