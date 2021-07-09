@@ -51,6 +51,7 @@ export default {
         description: "Description",
       },
       whitelist: "Whitelist",
+      noEmpty: "Cannot be empty",
     },
     btn: {
       confirm: "OK",
@@ -84,7 +85,7 @@ export default {
     columns: {
       switch: "switch",
       match: "match",
-      matchType: 'Match type',
+      matchType: "Match type",
       res: "responseText",
       remark: "remark",
       tag: "Tag",

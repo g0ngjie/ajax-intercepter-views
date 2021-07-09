@@ -51,6 +51,7 @@ export default {
         description: "描述",
       },
       whitelist: "白名单",
+      noEmpty: "不能为空",
     },
     btn: {
       confirm: "确 定",

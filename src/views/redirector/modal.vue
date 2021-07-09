@@ -153,16 +153,27 @@
               :key="index"
               style="margin-bottom: 5px"
             >
-              <el-input
-                :placeholder="$t('modal.form.placeholder')"
-                v-model="form.whitelist[index]"
+              <el-form-item
+                :rules="[
+                  {
+                    required: true,
+                    message: $t('modal.form.noEmpty'),
+                    trigger: 'change',
+                  },
+                ]"
+                :prop="`whitelist[${index}]`"
               >
-                <el-button
-                  slot="append"
-                  icon="el-icon-delete"
-                  @click.stop="handleDelWhite(index)"
-                />
-              </el-input>
+                <el-input
+                  :placeholder="$t('modal.form.placeholder')"
+                  v-model="form.whitelist[index]"
+                >
+                  <el-button
+                    slot="append"
+                    icon="el-icon-delete"
+                    @click.stop="handleDelWhite(index)"
+                  />
+                </el-input>
+              </el-form-item>
             </el-row>
           </section>
         </el-form-item>
@@ -230,6 +241,8 @@ export default {
         this.isEdit = true;
         // 编辑
         this.title = this.$t("modal.title.edit");
+        // 兼容版本迭代，旧数据未存在白名单
+        if (!row.whitelist) row.whitelist = [];
       } else {
         this.isEdit = false;
         // 新增
